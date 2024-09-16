@@ -25,7 +25,9 @@ namespace Casino322.DB
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Games> Games { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

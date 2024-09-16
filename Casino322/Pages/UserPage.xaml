@@ -61,6 +61,6 @@
 
 
         </StackPanel>
-        <Button x:Name="RoulPlay" Grid.Column="1" Content="Играть в рулетку" Margin="138,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="RoulPlay_Click"/>
+        <Button x:Name="RoulPlay" Grid.Column="1" Content="Играть в рулетку" Margin="138,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="RoulPlay_Click" Height="47" Width="152" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF"/>
     </Grid>
 </Page>

@@ -76,6 +76,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DB\ConnectionDB.cs" />
+    <Compile Include="DB\Games.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +95,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB\Payments.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Session.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\sysdiagrams.cs">
@@ -178,16 +184,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
+    <Resource Include="Images\Bets\Bet5000.png" />
+    <Resource Include="Images\Bets\Bet500.png" />
+    <Resource Include="Images\Bets\Bet1000.png" />
+    <Resource Include="Images\Bets\Bet100.png" />
+    <Resource Include="Images\Bets\Bet50.png" />
+    <Resource Include="Images\Bets\Bet20.png" />
+    <Resource Include="Images\Bets\Bet10.png" />
+    <Resource Include="Images\Bets\Bet5.png" />
+    <Resource Include="Images\Bets\Bet1.png" />
     <Resource Include="Images\RouletteWheel_SingleZero.png" />
     <Resource Include="Images\main.jpg" />
     <Resource Include="Images\Roulette_SingleZero.png" />
@@ -198,6 +203,20 @@
     <Resource Include="Images\roulette2.jpg" />
     <Resource Include="Images\roulette3.jpg" />
     <Resource Include="Images\roulette-wheel.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Resource Include="Images\black.png" />
+    <Resource Include="Images\red.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

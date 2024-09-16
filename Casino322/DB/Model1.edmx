@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище CasinoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="Game_Id" />
+          </Key>
+          <Property Name="Game_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Game_Date" Type="date" Nullable="false" />
+          <Property Name="Game_Stavka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Game_Result" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Game_Bet" Type="int" Nullable="false" />
+          <Property Name="Win" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+          <Property Name="Win_Count" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Payments">
           <Key>
             <PropertyRef Name="Payment_Id" />
@@ -14,6 +27,17 @@
           <Property Name="MethodPay" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Id" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Session_Id" />
+          </Key>
+          <Property Name="Session_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Start" Type="date" Nullable="false" />
+          <Property Name="Session_End" Type="date" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+          <Property Name="Games_Count" Type="int" Nullable="false" />
+          <Property Name="Winnig_Count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -36,6 +60,18 @@
           <Property Name="Role" Type="nvarchar" MaxLength="50" />
           <Property Name="Balance" Type="int" />
         </EntityType>
+        <Association Name="FK_Games_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Games" Type="Self.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Payments_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
@@ -48,13 +84,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Session_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище CasinoModelContainer">
+          <EntitySet Name="Games" EntityType="Self.Games" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Games_Users" Association="Self.FK_Games_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
           <AssociationSet Name="FK_Payments_Users" Association="Self.FK_Payments_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_Users" Association="Self.FK_Session_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Session" EntitySet="Session" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -62,14 +120,38 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CasinoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CasinoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Games" EntityType="CasinoModel.Games" />
           <EntitySet Name="Payments" EntityType="CasinoModel.Payments" />
+          <EntitySet Name="Session" EntityType="CasinoModel.Session" />
           <EntitySet Name="sysdiagrams" EntityType="CasinoModel.sysdiagrams" />
           <EntitySet Name="Users" EntityType="CasinoModel.Users" />
+          <AssociationSet Name="FK_Games_Users" Association="CasinoModel.FK_Games_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
           <AssociationSet Name="FK_Payments_Users" Association="CasinoModel.FK_Payments_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Session_Users" Association="CasinoModel.FK_Session_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="Game_Id" />
+          </Key>
+          <Property Name="Game_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Game_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Game_Stavka" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Game_Result" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Game_Bet" Type="Int32" Nullable="false" />
+          <Property Name="Win" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Win_Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="CasinoModel.FK_Games_Users" FromRole="Games" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Payments">
           <Key>
             <PropertyRef Name="Payment_Id" />
@@ -80,6 +162,18 @@
           <Property Name="User_Id" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" />
           <NavigationProperty Name="Users" Relationship="CasinoModel.FK_Payments_Users" FromRole="Payments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Session_Id" />
+          </Key>
+          <Property Name="Session_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Session_End" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Games_Count" Type="Int32" Nullable="false" />
+          <Property Name="Winnig_Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="CasinoModel.FK_Session_Users" FromRole="Session" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -101,8 +195,22 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Balance" Type="Int32" />
+          <NavigationProperty Name="Games" Relationship="CasinoModel.FK_Games_Users" FromRole="Users" ToRole="Games" />
           <NavigationProperty Name="Payments" Relationship="CasinoModel.FK_Payments_Users" FromRole="Users" ToRole="Payments" />
+          <NavigationProperty Name="Session" Relationship="CasinoModel.FK_Session_Users" FromRole="Users" ToRole="Session" />
         </EntityType>
+        <Association Name="FK_Games_Users">
+          <End Type="CasinoModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="CasinoModel.Games" Role="Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Payments_Users">
           <End Type="CasinoModel.Users" Role="Users" Multiplicity="1" />
           <End Type="CasinoModel.Payments" Role="Payments" Multiplicity="*" />
@@ -115,12 +223,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_Session_Users">
+          <End Type="CasinoModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="CasinoModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище CasinoModelContainer" CdmEntityContainer="CasinoEntities">
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="CasinoModel.Games">
+              <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="Win_Count" ColumnName="Win_Count" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Win" ColumnName="Win" />
+                <ScalarProperty Name="Game_Bet" ColumnName="Game_Bet" />
+                <ScalarProperty Name="Game_Result" ColumnName="Game_Result" />
+                <ScalarProperty Name="Game_Stavka" ColumnName="Game_Stavka" />
+                <ScalarProperty Name="Game_Date" ColumnName="Game_Date" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="CasinoModel.Payments">
               <MappingFragment StoreEntitySet="Payments">
@@ -129,6 +263,18 @@
                 <ScalarProperty Name="MethodPay" ColumnName="MethodPay" />
                 <ScalarProperty Name="TypePay" ColumnName="TypePay" />
                 <ScalarProperty Name="Payment_Id" ColumnName="Payment_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Session">
+            <EntityTypeMapping TypeName="CasinoModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Winnig_Count" ColumnName="Winnig_Count" />
+                <ScalarProperty Name="Games_Count" ColumnName="Games_Count" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Session_End" ColumnName="Session_End" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Session_Id" ColumnName="Session_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

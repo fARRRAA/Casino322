@@ -32,7 +32,7 @@ namespace Casino322.Pages
             txtName.Text = user.Name;
             txtLogin.Text = user.Login;
             txtPassword.Password = user.Password;
-            txtBalance.Text = $"Баланс: {user.Balance} ₽";
+            txtBalance.Text = user.Balance.HasValue ? $"Баланс: {user.Balance} ₽" : $"Баланс: 0 ₽";
         }
 
         private void ButtonRedact_Click(object sender, RoutedEventArgs e)
@@ -40,7 +40,7 @@ namespace Casino322.Pages
             var name = txtName.Text;
             var login = txtLogin.Text;
             var password = txtPassword.Password;
-           
+
 
             var User = ConnectionDB.db.Users.FirstOrDefault(x => x.Login == _user.Login && x.Password == _user.Password && x.Id_User == _user.Id_User);
 
@@ -54,7 +54,7 @@ namespace Casino322.Pages
                 MessageBox.Show("Редактирование прошло успешно");
                 txtName.Text = name;
                 txtLogin.Text = login;
-                txtPassword.Password= password;
+                txtPassword.Password = password;
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Casino322.Pages
             {
                 string result = parts[1].Trim();
                 type = result;
-                
+
             }
             string[] parts1 = method.Split(new[] { ':' }, 2);
             if (parts.Length > 1)
@@ -100,27 +100,27 @@ namespace Casino322.Pages
 
             }
 
-            
+
             var count = Convert.ToInt32(CountPay.Text);
-            if (type == "Списание" && _user.Balance<1)
+            if (type == "Списание" && _user.Balance < 1)
             {
                 MessageBox.Show("Баланс нулевой, нельзя выполнить операцию");
                 return;
             }
-            var tempPay = new Payments() 
-            { 
-                TypePay=type,
-                MethodPay=method,
-                Count =count,
+            var tempPay = new Payments()
+            {
+                TypePay = type,
+                MethodPay = method,
+                Count = count,
                 Users = _user
             };
 
-            if(type==null || method == null || count > 0)
+            if (type == null || method == null || count > 0)
             {
-                if(count>_user.Balance && type=="Списание")
+                if (count > _user.Balance && type == "Списание")
                 {
                     MessageBox.Show("Слишком большая сумма");
-                return;
+                    return;
                 }
                 ConnectionDB.db.Payments.Add(tempPay);
                 ConnectionDB.db.SaveChanges();
@@ -130,12 +130,24 @@ namespace Casino322.Pages
 
             if (type == "Оплата")
             {
+                if (!User.Balance.HasValue)
+                {
+                    User.Balance = 0;
+                    ConnectionDB.db.SaveChanges();
+                }
+
                 User.Balance += count;
                 ConnectionDB.db.SaveChanges();
-                txtBalance.Text= $"Баланс: {User.Balance} ₽";
+                txtBalance.Text = $"Баланс: {User.Balance} ₽";
             }
             if (type == "Списание")
             {
+                if (!User.Balance.HasValue)
+                {
+                    User.Balance = 0;
+                    ConnectionDB.db.SaveChanges();
+                }
+                ConnectionDB.db.SaveChanges();
                 User.Balance -= count;
 
                 ConnectionDB.db.SaveChanges();
