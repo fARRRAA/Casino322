@@ -62,5 +62,7 @@
 
         </StackPanel>
         <Button x:Name="RoulPlay" Grid.Column="1" Content="Играть в рулетку" Margin="138,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="RoulPlay_Click" Height="47" Width="152" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF"/>
+        <Button x:Name="AdminPanelBtn" Grid.Column="2" Content="Админ панель" Margin="139,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="AdminPanelBtn_Click" Height="46" Width="152" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF"/>
+        <Button x:Name="StatsBtn" Grid.Column="1" Content="Смотреть статистику" Margin="314,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="StatsBtn_Click" Height="46" Width="164" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>

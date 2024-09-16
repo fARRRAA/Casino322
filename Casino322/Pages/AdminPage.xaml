@@ -1,0 +1,87 @@
+﻿<Page x:Class="Casino322.Pages.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Casino322.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1100"
+      Title="AdminPage">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/main.jpg"/>
+        </Grid.Background>
+        <TextBlock Text="Админ Панель" Foreground="White"  FontSize="28" FontWeight="Medium" Margin="448,10,448,596"/>
+        <TabControl Margin="10,-36,191,0" Height="250" VerticalAlignment="Top" RenderTransformOrigin="0.503,0.008" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Игры" Margin="1,158,-1,-158" Background="White">
+                <Grid>
+                    <ListView  Name="ListGames"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-293" Height="349">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Game_Id}" Width="60">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Game_Date}" Width="115">Дата</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Game_Stavka}" Width="105">Ставка</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Game_Result}" Width="95">Результат</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Game_Bet}" Width="95">Сумма ставки</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Win}" Width="100">Итог</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=User_Id}" Width="85">Юзер</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Win_Count}" Width="85">Выигрыш</GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Платежи" Margin="0,157,0,-158" Background="White">
+                <Grid>
+                    <ListView Name="ListPayments" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-289" Height="349">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Payment_Id}" Width="60">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=TypePay}" Width="115">Тип</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=MethodPay}" Width="125">Способ</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=User_Id}" Width="95">Юзер</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Count}" Width="95">Сумма</GridViewColumn>
+
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Сесии" Margin="0,157,0,-158" Background="White">
+                <Grid>
+                    <ListView Name="ListSessions" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-295">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Session_Id}" Width="60">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Start}" Width="115">Начало</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Session_End}" Width="105">Конец</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=User_Id}" Width="95">Юзер</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Games_Count}" Width="115">Колво игр</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Winnig_Count}" Width="100">Колво побед</GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Юзеры" Margin="0,157,0,-158" Background="White">
+                <Grid>
+                    <ListView Name="ListUsers" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-291">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Id_User}" Width="60">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="115">Имя</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Login}" Width="110">Логин</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Password}" Width="120">Пароль</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Role}" Width="95">Роль</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Balance}" Width="100">Баланс</GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

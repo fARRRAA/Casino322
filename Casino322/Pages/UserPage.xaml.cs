@@ -24,6 +24,7 @@ namespace Casino322.Pages
     {
         private MainWindow _mainWindow;
         private Users _user;
+
         public UserPage(MainWindow mw, Users user)
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace Casino322.Pages
             txtLogin.Text = user.Login;
             txtPassword.Password = user.Password;
             txtBalance.Text = user.Balance.HasValue ? $"Баланс: {user.Balance} ₽" : $"Баланс: 0 ₽";
+            checkAdmin();
         }
 
         private void ButtonRedact_Click(object sender, RoutedEventArgs e)
@@ -61,6 +63,18 @@ namespace Casino322.Pages
                 MessageBox.Show("Произошла ошибка");
             }
         }
+
+        public void checkAdmin()
+        {
+            if (_user.Role != "admin")
+            {
+                AdminPanelBtn.Height = 0;
+                AdminPanelBtn.Width = 0;
+                AdminPanelBtn.Visibility = Visibility.Collapsed;
+
+            }
+        }
+
         public string trim(String str)
         {
 
@@ -158,6 +172,17 @@ namespace Casino322.Pages
         private void RoulPlay_Click(object sender, RoutedEventArgs e)
         {
             _mainWindow.MainFrame.NavigationService.Navigate(new RoulettePlay(_mainWindow, _user));
+        }
+
+        private void AdminPanelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.MainFrame.NavigationService.Navigate(new AdminPage(_mainWindow, _user));
+        }
+
+        private void StatsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var stats = new UserStats(_user);
+            stats.ShowDialog();
         }
     }
 }

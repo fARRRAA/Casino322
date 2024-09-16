@@ -1342,7 +1342,6 @@ namespace Casino322.Pages
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("лох");
         }
     }
 }
