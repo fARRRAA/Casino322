@@ -38,7 +38,7 @@
             <TextBlock x:Name="txtBalance" Text="Баланс: " FontSize="24px" HorizontalAlignment="Left" Margin="10,20,0,0" Foreground="White" FontWeight="Medium" Width="196"/>
         </StackPanel>
 
-        <StackPanel Grid.RowSpan="4" Margin="100,10,0,162" HorizontalAlignment="Left" Width="575" Grid.ColumnSpan="3">
+        <StackPanel Grid.RowSpan="4" Margin="125,10,0,162" HorizontalAlignment="Left" Width="575" Grid.ColumnSpan="3">
             <TextBlock Text="Пополнение/ Списание средств" Foreground="White"  FontSize="28" FontWeight="Medium" Width="428"/>
             <TextBlock Text="Выберите тип операции" FontSize="22px" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="White" FontWeight="Medium" Width="284"/>
             <ComboBox Width="292" Margin="0,15,0,0" Text="Выберите способ оплаты" Name="typePay">
@@ -64,5 +64,6 @@
         <Button x:Name="RoulPlay" Grid.Column="1" Content="Играть в рулетку" Margin="138,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="RoulPlay_Click" Height="47" Width="152" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF"/>
         <Button x:Name="AdminPanelBtn" Grid.Column="2" Content="Админ панель" Margin="139,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="AdminPanelBtn_Click" Height="46" Width="152" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF"/>
         <Button x:Name="StatsBtn" Grid.Column="1" Content="Смотреть статистику" Margin="314,60,0,0" Grid.Row="3" VerticalAlignment="Top" Click="StatsBtn_Click" Height="46" Width="164" Background="#FFFFCD07" FontWeight="SemiBold" Foreground="#E4FFFFFF" Grid.ColumnSpan="2"/>
+        <Image x:Name="QrCode" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="220" Margin="6,230,0,0" Grid.Row="2" VerticalAlignment="Top" Width="238" Grid.RowSpan="2"/>
     </Grid>
 </Page>

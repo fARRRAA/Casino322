@@ -1,6 +1,10 @@
 ﻿using Casino322.DB;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,7 +90,27 @@ namespace Casino322.Pages
             }
             return str;
         }
-
+        private BitmapImage GenerateQrCodeBitmapImage(string text)
+        {
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            {
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q); using (QRCode qrCode = new QRCode(qrCodeData))
+                {
+                    using (Bitmap qrBitmap = qrCode.GetGraphic(20))
+                    {
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            qrBitmap.Save(ms, ImageFormat.Png);
+                            ms.Position = 0;
+                            BitmapImage bitmapImage = new BitmapImage(); bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad; bitmapImage.StreamSource = ms;
+                            bitmapImage.EndInit();
+                            return bitmapImage;
+                        }
+                    }
+                }
+            }
+        }
 
         private void PayClick_Click(object sender, RoutedEventArgs e)
         {
@@ -139,6 +163,8 @@ namespace Casino322.Pages
                 ConnectionDB.db.Payments.Add(tempPay);
                 ConnectionDB.db.SaveChanges();
                 MessageBox.Show("Операция прошла успешно");
+                var qrText = $"Операция: {type} прошла успешно. Сумма: {count}  через {method} ";
+                QrCode.Source = GenerateQrCodeBitmapImage(qrText);
             }
             var User = ConnectionDB.db.Users.FirstOrDefault(x => x.Login == _user.Login && x.Password == _user.Password && x.Id_User == _user.Id_User);
 
