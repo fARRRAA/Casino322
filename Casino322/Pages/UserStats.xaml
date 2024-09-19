@@ -10,8 +10,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Images/roulette5.jpg"/>
         </Grid.Background>
-        <TextBlock Text="Статистика Юзера" Foreground="White"  FontSize="28" FontWeight="Medium" Margin="326,0,326,485"/>
-        <TabControl Margin="10,-36,191,0" Height="250" VerticalAlignment="Top" RenderTransformOrigin="0.503,0.008">
+        <TextBlock Text="Статистика Юзера" Foreground="White"  FontSize="28" FontWeight="Medium" Margin="326,0,308,485"/>
+        <TabControl Margin="10,-36,191,0" Height="250" VerticalAlignment="Top" RenderTransformOrigin="0.503,0.008" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Игры" Margin="1,158,-1,-158" Background="White">
                 <Grid>
                     <ListView  Name="ListGames"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,-78,-293" Height="349">

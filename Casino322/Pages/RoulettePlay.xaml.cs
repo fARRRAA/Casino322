@@ -34,8 +34,8 @@ namespace Casino322.Pages
         public List<int> fishka = new List<int>();
         public List<int> reds = new List<int>() { 1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36 };
         public List<int> blacks = new List<int>() { 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35 };
-
-        public DateTime SessionStart=DateTime.Now;
+        public int podkrut; 
+        public DateTime SessionStart = DateTime.Now;
         public RoulettePlay(MainWindow mw, Users user)
         {
             InitializeComponent();
@@ -43,16 +43,17 @@ namespace Casino322.Pages
             _user = user;
             txtBet.Text = $"Ваша Ставка: {Bet}";
             txtBalance.Text = $"Ваш Баланс: {_user.Balance}";
+            podkrut = (int)user.Chance;
         }
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             var temp = new Session()
             {
-                Start=SessionStart,
-                Session_End=DateTime.Now,
-                User_Id= _user.Id_User,
-                Games_Count=Games,
-                Winnig_Count=Winnings
+                Start = SessionStart,
+                Session_End = DateTime.Now,
+                User_Id = _user.Id_User,
+                Games_Count = Games,
+                Winnig_Count = Winnings
             };
             ConnectionDB.db.Session.Add(temp);
             ConnectionDB.db.SaveChanges();
@@ -125,21 +126,10 @@ namespace Casino322.Pages
         }
         private async void SpinBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (Games > 0)
-            {
-                GridsClear();
-                Bet = 0;
-                if (string.IsNullOrEmpty(stavkaColor) && Stavka.HasValue)
-                {
-                    Stavka = 0;
-                }
-                stavkaColor = "";
-                txtBet.Text = "Ваша ставка: ";
-                txtStavka.Text = "Ваше число: ";
-                GridsClear();
-                txtRes.Text = "";
-            }
+
             txtResult.Text = $"Выпавшее число: ";
+            txtRes.Text = "";
+
             if (Bet < 1 || !Stavka.HasValue)
             {
                 if (string.IsNullOrEmpty(stavkaColor))
@@ -150,14 +140,28 @@ namespace Casino322.Pages
             }
             await SpinWheel();
             var random = new Random();
-            Result = random.Next(0, 36);
+            var chance = random.Next(0, 101);
+            if (chance < podkrut)
+            {
+                Result = (int)Stavka;
+                MessageBox.Show(messageBoxText: $"popal, {podkrut}");
+            }
+            else
+            {
+                Result = random.Next(0, 36);
+            }
             txtResult.Text = $"Выпавшее число: {Result}";
+
+
             //обработка результата
             int winMoney = 0;
             var User = ConnectionDB.db.Users.FirstOrDefault(x => x.Login == _user.Login && x.Password == _user.Password && x.Id_User == _user.Id_User);
+
+
             if (Stavka == Result && Stavka.HasValue && string.IsNullOrEmpty(stavkaColor))
             {
-                winMoney = Bet * 2;
+
+                winMoney = Bet * 3;
                 User.Balance += winMoney;
                 ConnectionDB.db.SaveChanges();
                 txtBalance.Text = $"Ваш Баланс: {User.Balance}";
@@ -182,7 +186,7 @@ namespace Casino322.Pages
                         ConnectionDB.db.SaveChanges();
                         txtBalance.Text = $"Ваш Баланс: {User.Balance}";
                         Winnings++;
-                        txtRes.Text = "Вы Выиграли";
+                        txtRes.Text = $"Вы Выиграли: {winMoney} ₽";
                         txtRes.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2BFF00"));
                         win1 = "Победа";
                     }
@@ -192,7 +196,7 @@ namespace Casino322.Pages
                         User.Balance -= Bet;
                         ConnectionDB.db.SaveChanges();
                         txtBalance.Text = $"Ваш Баланс: {User.Balance}";
-                        txtRes.Text = "Вы Проиграли";
+                        txtRes.Text = $"Вы Проиграли: {Bet} ₽";
                         txtRes.Foreground = Brushes.Red;
                         win1 = "Поражение";
                     }
@@ -206,7 +210,7 @@ namespace Casino322.Pages
                         ConnectionDB.db.SaveChanges();
                         txtBalance.Text = $"Ваш Баланс: {User.Balance}";
                         Winnings++;
-                        txtRes.Text = "Вы Выиграли";
+                        txtRes.Text = $"Вы Выиграли: {winMoney} ₽";
                         txtRes.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2BFF00"));
                         win1 = "Победа";
                     }
@@ -216,7 +220,7 @@ namespace Casino322.Pages
                         User.Balance -= Bet;
                         ConnectionDB.db.SaveChanges();
                         txtBalance.Text = $"Ваш Баланс: {User.Balance}";
-                        txtRes.Text = "Вы Проиграли";
+                        txtRes.Text = $"Вы Проиграли: {Bet} ₽";
                         txtRes.Foreground = Brushes.Red;
                         win1 = "Поражение";
                     }
@@ -228,12 +232,12 @@ namespace Casino322.Pages
                 win = Stavka == Result ? win = "Победа" : "Поражение";
                 if (win == "Поражение")
                 {
-                    txtRes.Text = "Вы Проиграли";
+                    txtRes.Text = $"Вы Проиграли: {Bet} ₽";
                     txtRes.Foreground = Brushes.Red;
                 }
                 else
                 {
-                    txtRes.Text = "Вы Выиграли";
+                    txtRes.Text = $"Вы Выиграли: {winMoney} ₽";
                     txtRes.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2BFF00"));
                 }
             }
@@ -252,7 +256,7 @@ namespace Casino322.Pages
                 ConnectionDB.db.Games.Add(tempGames);
                 ConnectionDB.db.SaveChanges();
             }
-            if (Stavka.HasValue)
+            if (Stavka.HasValue && string.IsNullOrEmpty(stavkaColor))
             {
                 var tempGames = new Games()
                 {
@@ -267,14 +271,16 @@ namespace Casino322.Pages
                 ConnectionDB.db.Games.Add(tempGames);
                 ConnectionDB.db.SaveChanges();
             }
+
             Games++;
             if (string.IsNullOrEmpty(stavkaColor) && Stavka.HasValue)
             {
-                Stavka = 0;
+                Stavka = null;
             }
             stavkaColor = "";
             txtBet.Text = "Ваша ставка: ";
             txtStavka.Text = "Ваше число: ";
+            Bet = 0;
             GridsClear();
         }
         private Image addImage(int value, Grid grid)
@@ -1338,6 +1344,8 @@ namespace Casino322.Pages
             thirtyfourGrid.Children.Clear();
             thirtyfiveGrid.Children.Clear();
             twentysixGrid.Children.Clear();
+            redGrid.Children.Clear();
+            blackGrid.Children.Clear();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

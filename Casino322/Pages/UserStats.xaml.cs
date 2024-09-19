@@ -92,5 +92,10 @@ namespace Casino322.Pages
             ListPayments.ItemsSource = payments;
 
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

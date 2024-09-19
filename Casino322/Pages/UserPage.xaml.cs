@@ -175,13 +175,24 @@ namespace Casino322.Pages
                     User.Balance = 0;
                     ConnectionDB.db.SaveChanges();
                 }
-
+                if (count < 1)
+                {
+                    MessageBox.Show("Сумма должна быть положительной");
+                    return;
+                    
+                }
                 User.Balance += count;
                 ConnectionDB.db.SaveChanges();
                 txtBalance.Text = $"Баланс: {User.Balance} ₽";
             }
             if (type == "Списание")
             {
+                if (count <1)
+                {
+                    MessageBox.Show("Сумма должна быть положительной");
+                    return;
+
+                }
                 if (!User.Balance.HasValue)
                 {
                     User.Balance = 0;

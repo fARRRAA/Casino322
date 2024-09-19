@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="31242063837b466b95f3340038125195" Name="Diagram1">
-        <EntityTypeShape EntityType="CasinoModel.Games" Width="1.5" PointX="3" PointY="7.625" />
-        <EntityTypeShape EntityType="CasinoModel.Payments" Width="1.5" PointX="3" PointY="1.25" />
-        <EntityTypeShape EntityType="CasinoModel.Session" Width="1.5" PointX="3" PointY="4.375" />
-        <EntityTypeShape EntityType="CasinoModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CasinoModel.Users" Width="1.5" PointX="0.75" PointY="4.375" />
-        <AssociationConnector Association="CasinoModel.FK_Games_Users" />
-        <AssociationConnector Association="CasinoModel.FK_Payments_Users" />
-        <AssociationConnector Association="CasinoModel.FK_Session_Users" />
+      <Diagram DiagramId="1bdfb8a887784c19a73a7506cc368c72" Name="Diagram1">
+        <EntityTypeShape EntityType="CasinoModel.Games" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CasinoModel.Payments" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CasinoModel.Session" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CasinoModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CasinoModel.Users" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="CasinoModel.FK_Games_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CasinoModel.FK_Payments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CasinoModel.FK_Session_Users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

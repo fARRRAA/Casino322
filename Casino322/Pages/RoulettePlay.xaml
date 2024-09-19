@@ -183,7 +183,7 @@
             </Button.Background>
             <Grid x:Name="blackGrid"/>
         </Button>
-        <TextBlock x:Name="txtRes" Text="" FontSize="28px" HorizontalAlignment="Left" Margin="441,459,0,142" Foreground="Red" FontWeight="Medium" Width="265" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="txtRes" Text="" FontSize="28px" HorizontalAlignment="Left" Margin="441,459,0,142" Foreground="Red" FontWeight="Medium" Width="291" RenderTransformOrigin="0.5,0.5"/>
 
     </Grid>
 </Page>

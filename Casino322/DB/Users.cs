@@ -28,6 +28,7 @@ namespace Casino322.DB
         public string Password { get; set; }
         public string Role { get; set; }
         public Nullable<int> Balance { get; set; }
+        public Nullable<int> Chance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Games> Games { get; set; }

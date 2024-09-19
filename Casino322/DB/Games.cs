@@ -22,6 +22,7 @@ namespace Casino322.DB
         public string Win { get; set; }
         public int User_Id { get; set; }
         public int Win_Count { get; set; }
+    
         public virtual Users Users { get; set; }
     }
 }

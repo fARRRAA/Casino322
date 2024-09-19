@@ -12,8 +12,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Images/main.jpg"/>
         </Grid.Background>
-        <TextBlock Text="Админ Панель" Foreground="White"  FontSize="28" FontWeight="Medium" Margin="448,10,448,596"/>
-        <TabControl Margin="10,-36,191,0" Height="250" VerticalAlignment="Top" RenderTransformOrigin="0.503,0.008" SelectionChanged="TabControl_SelectionChanged">
+        <TextBlock Text="Админ Панель" Foreground="White"  FontSize="28" FontWeight="Medium" Margin="448,35,432,532"/>
+        <TabControl Margin="10,-18,191,0" Height="250" VerticalAlignment="Top" RenderTransformOrigin="0.503,0.008" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Игры" Margin="1,158,-1,-158" Background="White">
                 <Grid>
                     <ListView  Name="ListGames"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-293" Height="349">
@@ -68,7 +68,7 @@
             </TabItem>
             <TabItem Header="Юзеры" Margin="0,157,0,-158" Background="White">
                 <Grid>
-                    <ListView Name="ListUsers" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="0,157,0,-291">
+                    <ListView Name="ListUsers" ScrollViewer.HorizontalScrollBarVisibility="Hidden" MouseDoubleClick="ListUsers_MouseDoubleClick" Margin="0,157,0,-291">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Id_User}" Width="60">id</GridViewColumn>
@@ -77,11 +77,20 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Password}" Width="120">Пароль</GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Role}" Width="95">Роль</GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Balance}" Width="100">Баланс</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Chance}" Width="100">Подкрут</GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
             </TabItem>
         </TabControl>
+        <StackPanel x:Name="ChanceEdit" Margin="934,188,46,0">
+            <TextBlock Text="Подкрутка"   Foreground="White" FontSize="18"/>
+            <TextBox x:Name="txtChance"  Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Button Content="Сохранить"   Margin="0,20,0,0" Click="Button_Click"/>
+        </StackPanel>
+
+        <Button x:Name="Exit" Content="Выйти" Click="Exit_Click" Margin="22,35,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Page>

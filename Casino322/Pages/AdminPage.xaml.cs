@@ -31,11 +31,38 @@ namespace Casino322.Pages
             ListPayments.ItemsSource = ConnectionDB.db.Payments.ToList();
             ListSessions.ItemsSource = ConnectionDB.db.Session.ToList();
             ListUsers.ItemsSource = ConnectionDB.db.Users.ToList();
+            ChanceEdit.Visibility = Visibility.Collapsed;
+            ChanceEdit.Opacity = 0;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void ListUsers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ChanceEdit.Visibility = Visibility.Visible;
+            ChanceEdit.Opacity = 100;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int? chance =Convert.ToInt32(txtChance.Text);
+            if (!chance.HasValue)
+            {
+                return;
+            }
+            var user = ListUsers.SelectedItem as Users;
+            var temp = ConnectionDB.db.Users.FirstOrDefault(x => x.Id_User == user.Id_User);
+            temp.Chance = chance.Value;
+            ConnectionDB.db.SaveChanges();
+            ListUsers.ItemsSource = ConnectionDB.db.Users.ToList();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.MainFrame.NavigationService.Navigate(new UserPage(_mainWindow, _user));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Casino322.Pages
         {
             _mainWindow = mw;
             InitializeComponent();
-            txtLogin.Text = "fara";
+            txtLogin.Text = "user";
             txtPassword.Password = "123";
         }
 
