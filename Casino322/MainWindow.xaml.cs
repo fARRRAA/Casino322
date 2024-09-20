@@ -27,7 +27,7 @@ namespace Casino322
             InitializeComponent();
             MainFrame.NavigationService.Navigate(new StartPage(this));
             WMP.URL = "C:\\Users\\Ильдар\\source\\repos\\Casino322\\Casino322\\Music\\lasvegas.mp3";
-            WMP.settings.volume = 1; 
+            WMP.settings.volume = 7; 
             WMP.controls.play();
         }
     }

@@ -34,7 +34,7 @@ namespace Casino322.Pages
         public List<int> fishka = new List<int>();
         public List<int> reds = new List<int>() { 1, 3, 5, 7, 9, 12, 14, 16, 18, 21, 23, 25, 27, 30, 32, 34, 36 };
         public List<int> blacks = new List<int>() { 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35 };
-        public int podkrut; 
+        public int podkrut;
         public DateTime SessionStart = DateTime.Now;
         public RoulettePlay(MainWindow mw, Users user)
         {
@@ -127,6 +127,13 @@ namespace Casino322.Pages
         private async void SpinBtn_Click(object sender, RoutedEventArgs e)
         {
 
+
+            if (Bet > _user.Balance)
+            {
+                MessageBox.Show("ставка больше баланса");
+                return;
+            }
+
             txtResult.Text = $"Выпавшее число: ";
             txtRes.Text = "";
 
@@ -143,8 +150,12 @@ namespace Casino322.Pages
             var chance = random.Next(0, 101);
             if (chance < podkrut)
             {
-                Result = (int)Stavka;
-                MessageBox.Show(messageBoxText: $"popal, {podkrut}");
+                if (Stavka.HasValue)
+                {
+                    Result = (int)Stavka;
+
+                }
+                //MessageBox.Show(messageBoxText: $"popal, {podkrut}");
             }
             else
             {
